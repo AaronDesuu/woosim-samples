@@ -1,0 +1,25 @@
+
+          Sales Receipt
+
+MERCHANT NAME     woosim coffee
+MASTER            Gil-dong Hong
+ADDRESS      #60, Sandan-ro 388
+    Galsan-myeon, Hongseong-gun
+        Chungcheongnam-do Korea
+HELP DESK       +82-41-339-3700
+
+-------------------------------
+Product       Sale        Price
+-------------------------------
+Cafe mocha      2          7.5$
+Cafe latte      1          7.0$
+Cappuccino      1          7.5$
+-------------------------------
+Total                     29.5$
+-------------------------------
+
+                    Thank you!
+
+         www.woosim.com
+
+

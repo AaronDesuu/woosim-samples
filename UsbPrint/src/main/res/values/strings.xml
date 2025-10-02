@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Woosim USB Print</string>
+    <string name="connect_failure">USB connection error</string>
+    <string name="msr_failure">MSR reading failure</string>
+
+    <string name="sample_print">Sample Printing</string>
+    <string name="receipt">Receipt</string>
+    <string name="image">Image</string>
+    <string name="sample_barcode">Sample Barcode Printing</string>
+    <string name="barcode_1d">1D Barcodes</string>
+    <string name="barcode_2d">2D Barcodes</string>
+    <string name="barcode_gs1">GS1 Databars</string>
+    <string name="msr_mode_setting">MSR Mode</string>
+    <string name="track23">2 Track Mode</string>
+    <string name="track123">3 Track Mode</string>
+    <string name="msr_cancel">Cancel MSR Mode</string>
+    <string name="msr_clear">Clear Track Info</string>
+    <string name="msr_1track">1st Track</string>
+    <string name="msr_2track">2nd Track</string>
+    <string name="msr_3track">3rd Track</string>
+</resources>

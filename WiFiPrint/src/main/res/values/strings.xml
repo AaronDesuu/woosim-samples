@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Woosim WiFi Print</string>
+
+    <string name="connect">Connect a device</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="dlg_title">Enter Printer IP Address</string>
+    <string name="ip_addr">IP Address</string>
+    <string name="ip_hint">Enter IP address</string>
+    <string name="port">Port</string>
+    <string name="port_hint">Enter port number(1470 or 9100)</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="msg_connect">Socket connection is established</string>
+    <string name="msg_unknown_ip">Device IP is unknown host</string>
+    <string name="msg_connect_fail">Socket connection is failed</string>
+    <string name="msg_connect_lost">Socket connection is lost</string>
+    <string name="warn_timeout">Connection is not available.\nData sending is cancelled.</string>
+    <string name="msr_failure">MSR reading failure</string>
+
+    <string name="sample_print">Sample Printing</string>
+    <string name="receipt">Receipt</string>
+    <string name="image">Image</string>
+    <string name="sample_barcode">Sample Barcode Printing</string>
+    <string name="barcode_1d">1D Barcodes</string>
+    <string name="barcode_2d">2D Barcodes</string>
+    <string name="barcode_gs1">GS1 Databars</string>
+    <string name="msr_mode_setting">MSR Mode</string>
+    <string name="track23">2 Track Mode</string>
+    <string name="track123">3 Track Mode</string>
+    <string name="msr_cancel">Cancel MSR Mode</string>
+    <string name="msr_clear">Clear Track Info</string>
+    <string name="msr_1track">1st Track</string>
+    <string name="msr_2track">2nd Track</string>
+    <string name="msr_3track">3rd Track</string>
+</resources>

@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Woosim BT Print</string>
+    <string name="menu_search_device">Device Search</string>
+    <string name="menu_disconnect">Disconnect</string>
+
+    <string name="toast_bt_na">Bluetooth is not available</string>
+    <string name="bt_not_enabled">Bluetooth was not enabled</string>
+    <string name="permission_denied">Permission is denied</string>
+    <string name="connect_fail">Unable to connect device</string>
+    <string name="connect_lost">Device connection was lost</string>
+    <string name="connect">Connect a device</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_found">No devices found</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="warn_timeout">Connection is not available.\nData sending is cancelled.</string>
+    <string name="msr_failure">MSR reading failure</string>
+
+    <string name="sample_print">Sample Printing</string>
+    <string name="receipt">Receipt</string>
+    <string name="image">Image</string>
+    <string name="text_print">ASCII Text Printing</string>
+    <string name="edit_text">Enter text</string>
+    <string name="print">Print</string>
+    <string name="emphasis">Emphasis</string>
+    <string name="underline">Underline</string>
+    <string name="charsize">Character Extension</string>
+    <string name="justification">Alignment</string>
+    <string name="left">Left</string>
+    <string name="center">Center</string>
+    <string name="right">Right</string>
+    <string name="sample_barcode">Sample Barcode Printing</string>
+    <string name="barcode_1d">1D Barcodes</string>
+    <string name="barcode_2d">2D Barcodes</string>
+    <string name="barcode_gs1">GS1 Databars</string>
+    <string name="msr_mode_setting">MSR Mode</string>
+    <string name="track23">2 Track Mode</string>
+    <string name="track123">3 Track Mode</string>
+    <string name="msr_cancel">Cancel MSR Mode</string>
+    <string name="msr_clear">Clear Track Info</string>
+    <string name="msr_1track">1st Track</string>
+    <string name="msr_2track">2nd Track</string>
+    <string name="msr_3track">3rd Track</string>
+</resources>

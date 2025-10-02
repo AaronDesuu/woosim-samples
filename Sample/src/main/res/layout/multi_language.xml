@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/ml_info" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/ml_info2" />
+
+    <Button
+        android:id="@+id/btn_greek"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:text="@string/ml_greek"
+        android:onClick="printGreek" />
+    <Button
+        android:id="@+id/btn_latin9"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:text="@string/ml_latin9"
+        android:onClick="printLatin9" />
+    <Button
+        android:id="@+id/btn_russian"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:text="@string/ml_russian"
+        android:onClick="printRussian" />
+    <Button
+        android:id="@+id/btn_hebrew"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:text="@string/ml_hebrew"
+        android:onClick="printHebrew" />
+    <Button
+        android:id="@+id/btn_hangul"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:text="@string/ml_hangul"
+        android:onClick="printHangul" />
+    <Button
+        android:id="@+id/btn_chinese"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:text="@string/ml_chinese"
+        android:onClick="printChinese" />
+</LinearLayout>

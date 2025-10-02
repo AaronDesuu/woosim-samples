@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_print"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <Button
+                android:id="@+id/buttonReceipt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/receipt"
+                android:onClick="printReceipt" />
+            <Button
+                android:id="@+id/btn_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/image"
+                android:onClick="printImage" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/text_print"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal" >
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:cursorVisible="false"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:hint="@string/edit_text" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:text="@string/print"
+                android:onClick="printText" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBoxEmphasis"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@string/emphasis" />
+        <CheckBox
+            android:id="@+id/checkBoxUnderline"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@string/underline" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupAlignment"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/radioLeft"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/left" />
+            <RadioButton
+                android:id="@+id/radioCenter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/center" />
+            <RadioButton
+                android:id="@+id/radioRight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/right" />
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:text="@string/charsize"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            <Spinner
+                android:id="@+id/spinnerCharExt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/sample_barcode"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <Button
+                android:id="@+id/buttonBarcode1D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/barcode_1d"
+                android:onClick="print1DBarcode" />
+            <Button
+                android:id="@+id/buttonBarcode2D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/barcode_2d"
+                android:onClick="print2DBarcode" />
+            <Button
+                android:id="@+id/buttonBarcodeGS1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/barcode_gs1"
+                android:onClick="printGS1Databar" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/msr_mode_setting"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <Button
+                android:id="@+id/buttonMsrTrack2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/track23"
+                android:onClick="setMSRDoubleTrackMode" />
+            <Button
+                android:id="@+id/buttonMsrTrack3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/track123"
+                android:onClick="setMSRTripleTrackMode" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <Button
+                android:id="@+id/buttonMsrCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/msr_cancel"
+                android:onClick="cancelMSRMode" />
+            <Button
+                android:id="@+id/buttonMsrClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:text="@string/msr_clear"
+                android:onClick="clearMSRInfo" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/msr_1track"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView android:id="@+id/textViewTrack1"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/msr_2track"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView android:id="@+id/textViewTrack2"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/msr_3track"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView android:id="@+id/textViewTrack3"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+</ScrollView>
