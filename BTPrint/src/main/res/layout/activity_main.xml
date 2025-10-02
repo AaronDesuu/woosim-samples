@@ -10,9 +10,86 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
+        <!-- Printer Status Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Printer Status"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/statusConnection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Connection: Disconnected"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusPaper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Paper: N/A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/statusBattery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Battery: N/A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/statusTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Temperature: N/A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/statusCover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Cover: N/A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:id="@+id/statusPrintHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Print Head: N/A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Check Status Now"
+                android:onClick="checkStatus"
+                style="@style/Widget.AppCompat.Button" />
+
+        </LinearLayout>
+
+        <!-- Sample Printing Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/sample_print"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         <LinearLayout
@@ -39,6 +116,7 @@
                 android:onClick="printImage" />
         </LinearLayout>
 
+        <!-- Text Printing Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,6 +209,7 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
+        <!-- Barcode Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -170,6 +249,7 @@
                 android:onClick="printGS1Databar" />
         </LinearLayout>
 
+        <!-- MSR Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -258,6 +338,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="20dp"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

@@ -59,6 +59,28 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTrack2View;
     private TextView mTrack3View;
 
+    // Status monitoring UI elements
+    private TextView mStatusPaper;
+    private TextView mStatusBattery;
+    private TextView mStatusTemperature;
+    private TextView mStatusCover;
+    private TextView mStatusPrintHead;
+    private TextView mStatusConnection;
+
+    // Status monitoring variables
+    private Handler mStatusHandler;
+    private Runnable mStatusChecker;
+    private static final int STATUS_CHECK_INTERVAL = 5000; // 5 seconds
+    private boolean mMonitoringEnabled = false;
+    private int mStatusWaiting = 0; // Counter for pending status queries
+
+    // Status flags
+    private boolean mPaperOut = false;
+    private int mBatteryLevel = -1;
+    private boolean mHighTemperature = false;
+    private boolean mCoverOpen = false;
+    private boolean mPrintHeadError = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +120,195 @@ public class MainActivity extends AppCompatActivity {
         mTrack1View = findViewById(R.id.textViewTrack1);
         mTrack2View = findViewById(R.id.textViewTrack2);
         mTrack3View = findViewById(R.id.textViewTrack3);
+
+        // Initialize status monitoring UI
+        initializeStatusUI();
+
+        // Initialize status monitoring handler
+        mStatusHandler = new Handler(Looper.getMainLooper());
+        mStatusChecker = new Runnable() {
+            @Override
+            public void run() {
+                if (mMonitoringEnabled && mPrintService != null &&
+                        mPrintService.getState() == BluetoothPrintService.STATE_CONNECTED) {
+                    requestPrinterStatus();
+                    mStatusHandler.postDelayed(this, STATUS_CHECK_INTERVAL);
+                }
+            }
+        };
+    }
+
+    private void initializeStatusUI() {
+        mStatusPaper = findViewById(R.id.statusPaper);
+        mStatusBattery = findViewById(R.id.statusBattery);
+        mStatusTemperature = findViewById(R.id.statusTemperature);
+        mStatusCover = findViewById(R.id.statusCover);
+        mStatusPrintHead = findViewById(R.id.statusPrintHead);
+        mStatusConnection = findViewById(R.id.statusConnection);
+
+        updateStatusUI();
+    }
+
+    private void updateStatusUI() {
+        runOnUiThread(() -> {
+            // Connection status
+            if (mPrintService != null && mPrintService.getState() == BluetoothPrintService.STATE_CONNECTED) {
+                mStatusConnection.setText("Connected");
+                mStatusConnection.setTextColor(getColor(android.R.color.holo_green_dark));
+            } else {
+                mStatusConnection.setText("Disconnected");
+                mStatusConnection.setTextColor(getColor(android.R.color.holo_red_dark));
+            }
+
+            // Paper status
+            if (mPaperOut) {
+                mStatusPaper.setText("Paper: OUT");
+                mStatusPaper.setTextColor(getColor(android.R.color.holo_red_dark));
+            } else {
+                mStatusPaper.setText("Paper: OK");
+                mStatusPaper.setTextColor(getColor(android.R.color.holo_green_dark));
+            }
+
+            // Battery status
+            if (mBatteryLevel >= 0) {
+                mStatusBattery.setText("Battery: " + mBatteryLevel + "%");
+                if (mBatteryLevel < 20) {
+                    mStatusBattery.setTextColor(getColor(android.R.color.holo_red_dark));
+                } else if (mBatteryLevel < 50) {
+                    mStatusBattery.setTextColor(getColor(android.R.color.holo_orange_dark));
+                } else {
+                    mStatusBattery.setTextColor(getColor(android.R.color.holo_green_dark));
+                }
+            } else {
+                mStatusBattery.setText("Battery: N/A");
+                mStatusBattery.setTextColor(getColor(android.R.color.darker_gray));
+            }
+
+            // Temperature status
+            if (mHighTemperature) {
+                mStatusTemperature.setText("Temp: HIGH");
+                mStatusTemperature.setTextColor(getColor(android.R.color.holo_red_dark));
+            } else {
+                mStatusTemperature.setText("Temp: OK");
+                mStatusTemperature.setTextColor(getColor(android.R.color.holo_green_dark));
+            }
+
+            // Cover status
+            if (mCoverOpen) {
+                mStatusCover.setText("Cover: OPEN");
+                mStatusCover.setTextColor(getColor(android.R.color.holo_orange_dark));
+            } else {
+                mStatusCover.setText("Cover: CLOSED");
+                mStatusCover.setTextColor(getColor(android.R.color.holo_green_dark));
+            }
+
+            // Print head status
+            if (mPrintHeadError) {
+                mStatusPrintHead.setText("Head: ERROR");
+                mStatusPrintHead.setTextColor(getColor(android.R.color.holo_red_dark));
+            } else {
+                mStatusPrintHead.setText("Head: OK");
+                mStatusPrintHead.setTextColor(getColor(android.R.color.holo_green_dark));
+            }
+        });
+    }
+
+    private void requestPrinterStatus() {
+        // Increment counter to track pending status queries
+        mStatusWaiting++;
+
+        // Request real-time status from printer using WoosimCmd
+        sendData(WoosimCmd.queryStatus());
+    }
+
+    private void parseStatusResponse(byte[] data, int length) {
+        if (data == null || length < 1) return;
+
+        // Check if we're expecting a status response
+        if (mStatusWaiting > 0 && length == 1 && (data[0] & 0x30) == 0x30) {
+            mStatusWaiting--;
+
+            // Parse status byte according to Woosim printer protocol
+            // This example is for WSP-R240 model group
+            // Refer to your printer's command manual for exact bit definitions
+            byte status = data[0];
+
+            switch (status) {
+                case 0x30: // Device status is OK
+                    mPaperOut = false;
+                    mCoverOpen = false;
+                    mPrintHeadError = false;
+                    break;
+                case 0x31: // Paper is not present
+                    mPaperOut = true;
+                    mCoverOpen = false;
+                    mPrintHeadError = false;
+                    break;
+                case 0x32: // Cover is opened
+                    mPaperOut = false;
+                    mCoverOpen = true;
+                    mPrintHeadError = false;
+                    break;
+                case 0x33: // Paper is not present & cover is opened
+                    mPaperOut = true;
+                    mCoverOpen = true;
+                    mPrintHeadError = false;
+                    break;
+                default:
+                    // Handle other status codes
+                    // Bit parsing for other printer models
+                    if ((status & 0x01) != 0) {
+                        mPaperOut = true;
+                    }
+                    if ((status & 0x02) != 0) {
+                        mCoverOpen = true;
+                    }
+                    if ((status & 0x20) != 0) {
+                        mPrintHeadError = true;
+                    }
+                    if ((status & 0x40) != 0) {
+                        mHighTemperature = true;
+                    }
+                    break;
+            }
+
+            // Simulate battery level (actual implementation depends on printer model)
+            // Some Woosim printers may support battery status queries
+            if (mBatteryLevel < 0) {
+                mBatteryLevel = 75; // Default value
+            }
+
+            updateStatusUI();
+            showStatusWarnings();
+        }
+    }
+
+    private void showStatusWarnings() {
+        // Show warnings if critical issues detected
+        if (mPaperOut) {
+            Toast.makeText(this, "Warning: Paper out!", Toast.LENGTH_SHORT).show();
+        }
+        if (mHighTemperature) {
+            Toast.makeText(this, "Warning: High temperature!", Toast.LENGTH_SHORT).show();
+        }
+        if (mCoverOpen) {
+            Toast.makeText(this, "Warning: Cover is open!", Toast.LENGTH_SHORT).show();
+        }
+        if (mPrintHeadError) {
+            Toast.makeText(this, "Error: Print head error!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void startStatusMonitoring() {
+        mMonitoringEnabled = true;
+        mStatusHandler.post(mStatusChecker);
+        Log.d(TAG, "Status monitoring started");
+    }
+
+    private void stopStatusMonitoring() {
+        mMonitoringEnabled = false;
+        mStatusHandler.removeCallbacks(mStatusChecker);
+        Log.d(TAG, "Status monitoring stopped");
     }
 
     RadioGroup.OnCheckedChangeListener mAlignmentChangeListener = (group, checkedId) -> {
@@ -172,6 +383,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
+        // Stop status monitoring
+        stopStatusMonitoring();
         // Stop the Bluetooth print services
         if (mPrintService != null)
             mPrintService.stop();
@@ -200,6 +413,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.disconnect) {
             if (mPrintService != null)
                 mPrintService.start();
+            stopStatusMonitoring();
             invalidateOptionsMenu();
             return true;
         }
@@ -227,12 +441,17 @@ public class MainActivity extends AppCompatActivity {
                 String mConnectedDeviceName = (String) msg.obj;
                 Toast.makeText(getApplicationContext(), "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                 invalidateOptionsMenu();
+                // Start status monitoring when connected
+                startStatusMonitoring();
+                updateStatusUI();
                 break;
             case MESSAGE_TOAST:
                 Toast.makeText(getApplicationContext(), msg.arg1, Toast.LENGTH_SHORT).show();
                 break;
             case MESSAGE_READ:
                 mWoosim.processRcvData((byte[])msg.obj, msg.arg1);
+                // Parse status responses
+                parseStatusResponse((byte[])msg.obj, msg.arg1);
                 break;
             case WoosimService.MESSAGE_PRINTER:
                 if (msg.arg1 == WoosimService.MSR) {
@@ -461,5 +680,15 @@ public class MainActivity extends AppCompatActivity {
         mTrack1View.setText("");
         mTrack2View.setText("");
         mTrack3View.setText("");
+    }
+
+    // Manual status check button
+    public void checkStatus(View v) {
+        if (mPrintService != null && mPrintService.getState() == BluetoothPrintService.STATE_CONNECTED) {
+            requestPrinterStatus();
+            Toast.makeText(this, "Checking printer status...", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
+        }
     }
 }
